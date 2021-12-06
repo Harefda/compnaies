@@ -9,10 +9,14 @@ class UserCreator:
         self.password = password
     
     def __call__(self):
-        pass
+        if self.allowed_to_create():
+            user = self.create_user()
+            user.save()
+        else:
+            return False
 
     def create_user(self):
-        return User.objects.create(
+        return User.objects.create_user(
             email=self.email,
             password=self.password
         )
